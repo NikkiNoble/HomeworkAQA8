@@ -65,6 +65,7 @@ public class DBInteractions {
 
     public static void deleteCodes() throws SQLException {
         val deleteSQL = "DELETE FROM auth_codes;";
+
         try (
                 val connection = DriverManager.getConnection(
                         "jdbc:mysql://192.168.99.100:3306/app", "app", "pass"
@@ -72,6 +73,25 @@ public class DBInteractions {
         )
         {
             val deleteStmt = connection.prepareStatement(deleteSQL);
+            deleteStmt.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void deleteTable() throws SQLException {
+        val deleteUsers = "DELETE FROM users;";
+        val deletionCards = "DELETE FROM cards;";
+
+        try (
+                val connection = DriverManager.getConnection(
+                        "jdbc:mysql://192.168.99.100:3306/app", "app", "pass"
+                )
+        )
+        {
+            val deleteStmt2 = connection.prepareStatement(deletionCards);
+            deleteStmt2.execute();
+            val deleteStmt = connection.prepareStatement(deleteUsers);
             deleteStmt.execute();
         }
         catch (SQLException e) {

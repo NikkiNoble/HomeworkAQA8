@@ -1,6 +1,7 @@
 package ru.netology;
 
 import lombok.val;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DBInteractions;
 import ru.netology.data.DataHelper;
@@ -9,9 +10,13 @@ import ru.netology.data.LoginPage;
 import java.sql.SQLException;
 
 public class LoginTest {
+    @AfterAll
+    static void cleanTables() throws SQLException {
+        DBInteractions.deleteTable();
+    }
 
     @Test
-    void ShouldLoginWithTakingDataFromDB() throws SQLException {
+    void shouldLoginWithTakingDataFromDB() throws SQLException {
         DataHelper.openPage();
         LoginPage login = new LoginPage();
         val verificationPage = login.validLogin();
@@ -19,7 +24,7 @@ public class LoginTest {
         DBInteractions.deleteCodes();
     }
     @Test
-    void ShouldLoginWithTakingDataFromDBWithDifUser() throws SQLException {
+    void shouldLoginWithTakingDataFromDBWithDifUser() throws SQLException {
         DataHelper.openPage();
         LoginPage login = new LoginPage();
         val verificationPage = login.validLoginForDifferentUser();
@@ -27,7 +32,7 @@ public class LoginTest {
         DBInteractions.deleteCodes();
     }
     @Test
-    void ShouldShowErrorOnVerificationPage() throws SQLException {
+    void shouldShowErrorOnVerificationPage() throws SQLException {
         DataHelper.openPage();
         LoginPage login = new LoginPage();
         val verificationPage = login.validLogin();
@@ -35,10 +40,12 @@ public class LoginTest {
         DBInteractions.deleteCodes();
     }
     @Test
-    void ShouldShowErrorOnLoginPage() throws SQLException {
+    void shouldShowErrorOnLoginPage() throws SQLException {
         DataHelper.openPage();
         LoginPage login = new LoginPage();
         login.notValidLogin();
         DBInteractions.deleteCodes();
+
     }
+
 }
